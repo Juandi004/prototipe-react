@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
 
 return (
     <>
-   
     <footer className="bg-bg-100 text-text-200 text-sm font-urbanist">
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
@@ -51,9 +52,9 @@ return (
         <div className="border-t border-bg-300 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center">
           <span className="text-text-200">© 2025 InCode. All rights reserved.</span>
           <div className="space-x-4 mt-4 sm:mt-0">
-            <a href="#" className="hover:text-primary-100">Privacy Policy</a>
-            <a href="#" className="hover:text-primary-100">Terms of Use</a>
-            <a href="#" className="hover:text-primary-100">Contact</a>
+            <a className="hover:text-primary-100">Privacy Policy</a>
+            <a className="hover:text-primary-100">Terms of Use</a>
+            <a className="hover:text-primary-100"><Link to="/Contacts">Contacts</Link></a>
           </div>
         </div>
       </div>
