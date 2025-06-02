@@ -1,20 +1,20 @@
-import Header from './components/Header'
-import Footer from './components/Footer';
+import { Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import AboutUs from './pages/AboutUs'
+import Blog from './pages/Blog'
+import Services from './pages/Services'
+import Contact from './pages/Contact'
 
 function App() {
   return (
-    <>
-      <div>
-        <Header/>
-      </div>
-
-      <div className="flex justify-center items-center">
-        Hola Mundo
-      </div>
-      <div>
-        <Footer/>
-      </div>
-    </>
+    
+    <Routes>
+      <Route path="/" element={<HomePage />} /> 
+      <Route path="/AboutUs" element={<AboutUs />} /> 
+      <Route path="/Blog" element={<Blog />} /> 
+      <Route path="/Services" element={<Services />} /> 
+      <Route path="/Contacts" element={<Contact />} /> 
+    </Routes>
   )
 }
 
