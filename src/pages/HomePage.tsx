@@ -6,7 +6,7 @@ function HomePage() {
     <>
       <Header/>
         <div className="flex flex-col items-center justify-center min-h-screen bg-bg-100 text-text-100 font-urbanist">
-          <h1 className="text-4xl font-bold mb-4">Home</h1>
+          <h1 className="text-5xl font-bold mb-4">Home</h1>
           <p className="text-lg">Hola Mundo</p>
         </div>
       <Footer/>

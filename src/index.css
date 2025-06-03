@@ -3,3 +3,4 @@
 @theme {
   --font-urbanist: "Urbanist", sans-serif;
 }
+@import "swiper/css"
