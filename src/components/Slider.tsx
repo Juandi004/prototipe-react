@@ -1,26 +1,23 @@
 import { useState } from "react";
-import { Modal, Pagination } from "antd";
+import { Modal } from "antd";
+import { motion, AnimatePresence } from "framer-motion";
 
-const arrow = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="bg-gray-200 rounded-full text-black"
-  >
-    <path d="M5 12h14" />
-    <path d="M13 18l6-6" />
-    <path d="M13 6l6 6" />
+const arrowRight = (
+  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+);
+
+const arrowLeft = (
+  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 12H5M11 6l-6 6 6 6" />
   </svg>
 );
 
 const cards = [
+  // Tus objetos de cards aquí (igual que los que pusiste)
   {
     id: 1,
     cardTitle: "Sitios Web Express",
@@ -47,8 +44,9 @@ const cards = [
         <path d="M13 7h4" />
       </svg>
     ),
-    arrow: arrow
+    arrow: arrowRight
   },
+  // ... Los demás cards igual que tú pusiste (2, 3, 4, 5)
   {
     id: 2,
     cardTitle: "Landing Page Premium",
@@ -75,7 +73,7 @@ const cards = [
         <path d="M13 7h4" />
       </svg>
     ),
-    arrow: arrow
+    arrow: arrowRight
   },
   {
     id: 3,
@@ -103,7 +101,7 @@ const cards = [
         <path d="M13 7h4" />
       </svg>
     ),
-    arrow: arrow
+    arrow: arrowRight
   },
   {
     id: 4,
@@ -131,7 +129,7 @@ const cards = [
         <path d="M13 7h4" />
       </svg>
     ),
-    arrow: arrow
+    arrow: arrowRight
   },
   {
     id: 5,
@@ -159,21 +157,32 @@ const cards = [
         <path d="M13 7h4" />
       </svg>
     ),
-    arrow: arrow
+    arrow: arrowRight
   },
 ];
 
-const pageSize = 3; 
+const cardsPerPage = 3;
 
 const Slider = () => {
   const [selectedCardId, setSelectedCardId] = useState<Number | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const selectedCard = cards.find((c) => c.id === selectedCardId);
+  const [startIndex, setStartIndex] = useState(0);
 
-  const paginatedCards = cards.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  const selectedCard = cards.find((c) => c.id === selectedCardId);
+  const visibleCards = cards.slice(startIndex, startIndex + cardsPerPage);
+
+  const next = () => {
+    const newIndex = startIndex + cardsPerPage;
+    if (newIndex < cards.length) {
+      setStartIndex(newIndex);
+    }
+  };
+
+  const prev = () => {
+    const newIndex = startIndex - cardsPerPage;
+    if (newIndex >= 0) {
+      setStartIndex(newIndex);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -181,28 +190,43 @@ const Slider = () => {
         Nuestros Servicios Destacados
       </h2>
 
-      <div className="flex flex-wrap justify-center gap-6">
-        {paginatedCards.map((card) => (
-          <button
-            key={card.id}
-            onClick={() => setSelectedCardId(card.id)}
-            className="flex flex-col max-w-sm w-full sm:w-[300px] bg-white border border-gray-200 rounded-lg shadow-md p-5 transition-all duration-300 hover:scale-105 hover:text-black"
-          >
-            <div className="py-7 flex justify-center">{card.icon}</div>
-            <h5 className="text-xl font-bold tracking-tight text-black">{card.cardTitle}</h5>
-            <h6 className="text-m py-2 tracking-tight text-black">{card.cardDesc}</h6>
-            <div className="flex items-center justify-end w-full mt-4">{card.arrow}</div>
-          </button>
-        ))}
-      </div>
+      <div className="flex items-center justify-center gap-4">
+        <button
+          onClick={prev}
+          disabled={startIndex === 0}
+          className="p-2 rounded-full bg-gray-200 disabled:opacity-30"
+        >
+          {arrowLeft}
+        </button>
 
-      <div className="mt-6 flex justify-center">
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={cards.length}
-          onChange={(page) => setCurrentPage(page)}
-        />
+        <div className="flex gap-6 overflow-hidden w-[calc(280px*3+12px*2)]">
+          <AnimatePresence initial={false} mode="wait">
+            {visibleCards.map((card) => (
+              <motion.button
+                key={card.id}
+                onClick={() => setSelectedCardId(card.id)}
+                className="flex flex-col w-[280px] sm:w-[300px] bg-white border border-gray-200 rounded-lg shadow-md p-5 transition-all hover:scale-105 hover:text-black"
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.1 }}
+              >
+                <div className="py-7 flex justify-center">{card.icon}</div>
+                <h5 className="text-xl font-bold tracking-tight text-black">{card.cardTitle}</h5>
+                <h6 className="text-m py-2 tracking-tight text-black">{card.cardDesc}</h6>
+                <div className="flex items-center justify-end w-full mt-4">{card.arrow}</div>
+              </motion.button>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        <button
+          onClick={next}
+          disabled={startIndex + cardsPerPage >= cards.length}
+          className="p-2 rounded-full bg-gray-200 disabled:opacity-30"
+        >
+          {arrowRight}
+        </button>
       </div>
 
       <Modal
