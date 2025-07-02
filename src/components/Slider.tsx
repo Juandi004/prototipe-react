@@ -17,7 +17,6 @@ const arrowLeft = (
 );
 
 const cards = [
-  // Tus objetos de cards aquí (igual que los que pusiste)
   {
     id: 1,
     cardTitle: "Sitios Web Express",
@@ -46,7 +45,6 @@ const cards = [
     ),
     arrow: arrowRight
   },
-  // ... Los demás cards igual que tú pusiste (2, 3, 4, 5)
   {
     id: 2,
     cardTitle: "Landing Page Premium",
@@ -186,10 +184,6 @@ const Slider = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold text-center mb-8 text-black font-urbanist">
-        Nuestros Servicios Destacados
-      </h2>
-
       <div className="flex items-center justify-center gap-4">
         <button
           onClick={prev}

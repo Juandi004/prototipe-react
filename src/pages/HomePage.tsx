@@ -3,14 +3,30 @@ import { Row, Col, Typography, Button, Card, Space } from 'antd';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import techImage from '../assets/tech.avif';
+import googleLogo from '../assets/google.png';
+import metaLogo from '../assets/meta.svg';
+import vscLogo from '../assets/vsc.svg';
+import epicLogo from '../assets/epic.svg';
+import AOS from 'aos';
+import { useEffect } from 'react';
+import 'aos/dist/aos.css';
+import Slider from '../components/Slider';
+
 
 const { Title, Paragraph } = Typography;
 
 const MainPage: React.FC = () => {
+
+    useEffect(() => {
+    AOS.init({ once: true }); 
+  }, []);
+
+
   return (
     <>
     <Header/>
-    <div className="px-8 lg:px-20 py-12">
+    <div className="px-8 lg:px-20 py-12" data-aos="fade-up" data-aos-duration="1000">
       <Row align="middle" justify="space-between" className="min-h-[80vh]">
         <Col xs={24} md={12}>
           <Title className="font-urbanist !text-4xl lg:!text-6xl !font-bold !leading-tight">
@@ -19,57 +35,66 @@ const MainPage: React.FC = () => {
           <Paragraph className="font-urbanis!text-lg max-w-[500px]">
             Accelerate your digital transformation with highly skilled developers, engineers, and designers.
           </Paragraph>
-          <Button type="primary" size="large" className="mt-4">Let’s Talk</Button>
+          <Button type="primary" size="large" className="mt-4">
+            <Link to={"/Contacts"}>Let's Talk</Link>
+          </Button>
         </Col>
         <Col xs={0} md={10}>
           <img
-            src="https://via.placeholder.com/500x400"
+            src={techImage}
             alt="Tech Talent"
             className="w-full rounded-xl shadow-lg"
           />
         </Col>
       </Row>
-      <section className="mt-32">
+      <section className="mt-32" data-aos="fade-up" data-aos-duration="1000">
         <Title level={2}>Our Services</Title>
-        <Row gutter={[24, 24]}>
-          {['Staff Augmentation', 'Dedicated Teams', 'Software Outsourcing'].map((service, i) => (
-            <Col xs={24} sm={12} md={8} key={i}>
-              <Card
-                hoverable
-                className="h-full shadow-md"
-                cover={
-                  <img
-                    alt={service}
-                    src={`https://via.placeholder.com/400x200?text=${encodeURIComponent(service)}`}
-                  />
-                }
-              >
-                <Card.Meta
-                  title={service}
-                  description="We provide expert teams and individuals to support your software development needs."
-                />
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <Slider/>
       </section>
-      <section className="mt-32">
+      <section className="mt-32" data-aos="fade-up" data-aos-duration="1000">
         <Title level={2}>Trusted by Global Companies</Title>
-        <Row gutter={[24, 24]} justify="center">
-          {['Google', 'HP', 'Rolls Royce', 'Pinterest'].map((client, i) => (
-            <Col xs={12} sm={6} key={i}>
+        <Row gutter={[24, 24]} justify="center" className="mt-8 max-widht-1000">
+            <Col xs={12} sm={6}>
               <Card bordered={false} className="text-center shadow-none">
                 <img
-                  src={`https://via.placeholder.com/120x60?text=${encodeURIComponent(client)}`}
-                  alt={client}
+                  src={googleLogo}
                   className="mx-auto"
                 />
               </Card>
             </Col>
-          ))}
+            <Col xs={12} sm={6}>
+              <Card bordered={false} className="text-center shadow-none">
+                <img
+                  src={metaLogo}
+                  className="mx-auto"
+                  width={100}
+                  height={100}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Card bordered={false} className="text-center shadow-none">
+                <img
+                  src={vscLogo}
+                  className="mx-auto"
+                  width={100}
+                  height={100}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Card bordered={false} className="text-center shadow-none">
+                <img
+                  src={epicLogo}
+                  className="mx-auto"
+                  width={100}
+                  height={100}
+                />
+              </Card>
+            </Col>
         </Row>
       </section>
-      <section className="mt-36 bg-gray-100 p-10 rounded-2xl">
+      <section className="mt-36 bg-gray-100 p-10 rounded-2xl" data-aos="fade-up" data-aos-duration="1000">
         <Row justify="space-between" align="middle">
           <Col xs={24} md={16}>
             <Title level={3}>Ready to scale your team with elite tech talent?</Title>
@@ -89,6 +114,6 @@ const MainPage: React.FC = () => {
     <Footer/>
     </>
   );
-};
+}
 
 export default MainPage;
